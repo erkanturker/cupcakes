@@ -1,6 +1,6 @@
 """Flask app for Cupcakes"""
 
-from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request,render_template
 from models import connect_db,db,Cupcake
 
 app = Flask(__name__)
@@ -12,6 +12,12 @@ app.config['SECRET_KEY']="ekremAsimZehraErkan"
 
 connect_db(app)
 app.app_context().push()
+
+@app.route("/")
+def show_cupcakes():
+    cupcakes = Cupcake.query.all()
+    return render_template("index.html",cupcakes=cupcakes)
+
 
 # *****************************
 # RESTFUL TODOS JSON API
